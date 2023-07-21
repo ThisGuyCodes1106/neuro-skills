@@ -35,7 +35,7 @@ func main() {
 
 	app := fiber.New()
 
-	// CORS middleware
+	// CORS middleware, to allow all origins
 	app.Use(func(c *fiber.Ctx) error {
 		c.Response().Header.Set("Access-Control-Allow-Origin", "http://localhost:5173")
 		c.Response().Header.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
@@ -51,7 +51,6 @@ func main() {
 	})
 
 	app.Get("/api/products", func(c *fiber.Ctx) error {
-		log.Println(c.JSON(skills))
 		return c.JSON(skills)
 	})
 

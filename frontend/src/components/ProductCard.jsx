@@ -1,8 +1,13 @@
 import {Paper, Grid, Typography, Box, Rating, Button} from '@mui/material';
 import DownloadingIcon from '@mui/icons-material/Downloading';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import PropTypes from 'prop-types';
 
 function ProductCard(props) {
+
+    ProductCard.propTypes = {
+        skill: PropTypes.arrayOf(PropTypes.object).isRequired
+    }
 
     const { name, shortDescription, price, rating, downloadTime, image } = props.skill
 
