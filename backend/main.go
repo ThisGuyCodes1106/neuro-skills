@@ -1,11 +1,14 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	_ "github.com/lib/pq"
 )
 
 type Skill struct {
@@ -18,6 +21,14 @@ type Skill struct {
 	DownloadTime string  `json:"downloadTime"`
 	Image        string  `json:"image"`
 }
+
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "postgres"
+	password = "BurnRome"
+	dbname   = "postgres"
+)
 
 func main() {
 
@@ -32,6 +43,25 @@ func main() {
 	if err := json.Unmarshal(data, &skills); err != nil {
 		log.Fatal("Error unmarshaling JSON:", err)
 	}
+
+	// Connect to the PostgreSQL database
+	connStr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal("Error connecting to the database:", err)
+	}
+	defer db.Close()
+
+	// Insert each Skill into the database
+	for _, skill := range skills {
+		_, err := db.Exec("INSERT INTO skills (id, name, short_description, long_description, price, rating, download_time, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+			skill.ID, skill.Name, skill.ShortDesc, skill.LongDesc, skill.Price, skill.Rating, skill.DownloadTime, skill.Image)
+		if err != nil {
+			log.Println("Error inserting data:", err)
+		}
+	}
+
+	log.Println("Data inserted successfully!")
 
 	app := fiber.New()
 

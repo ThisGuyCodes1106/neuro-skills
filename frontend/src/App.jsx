@@ -6,6 +6,8 @@ import Footer from './components/Footer.jsx'
 
 import Container from '@mui/material/Container';
 
+export const ENDPOINT = 'http://localhost:3000';
+
 
 function App() {
 
@@ -14,7 +16,7 @@ function App() {
   useEffect(() => {
     async function getAllProducts() {
       try {
-        const response = await fetch('http://localhost:3000/api/products');
+        const response = await fetch(`${ENDPOINT}/api/products`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
