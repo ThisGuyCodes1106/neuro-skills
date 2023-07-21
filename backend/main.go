@@ -1,17 +1,43 @@
 package main
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
+
 	"github.com/gofiber/fiber/v2"
 )
 
-var stefan string = "Sexy"
+type Skill struct {
+	ID           int     `json:"id"`
+	Name         string  `json:"name"`
+	ShortDesc    string  `json:"shortDescription"`
+	LongDesc     string  `json:"longDescription"`
+	Price        float64 `json:"price"`
+	Rating       float64 `json:"rating"`
+	DownloadTime string  `json:"downloadTime"`
+	Image        string  `json:"image"`
+}
 
 func main() {
+
+	// Read the JSON data from the file
+	data, err := ioutil.ReadFile("productData.json")
+	if err != nil {
+		log.Fatal("Error reading productData.json:", err)
+	}
+
+	// Unmarshal the JSON data into a slice of Course structs
+	var skills []Skill
+	if err := json.Unmarshal(data, &skills); err != nil {
+		log.Fatal("Error unmarshaling JSON:", err)
+	}
+
 	app := fiber.New()
 
 	// CORS middleware
 	app.Use(func(c *fiber.Ctx) error {
-		c.Response().Header.Set("Access-Control-Allow-Origin", "http://localhost:5173") // Replace with your React frontend's origin
+		c.Response().Header.Set("Access-Control-Allow-Origin", "http://localhost:5173")
 		c.Response().Header.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		c.Response().Header.Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 		if c.Method() == "OPTIONS" {
@@ -24,8 +50,9 @@ func main() {
 		return c.SendString("Hello, World!")
 	})
 
-	app.Get("/test", func(c *fiber.Ctx) error {
-		return c.SendString(stefan) // Return the value of the stefan variable
+	app.Get("/api/products", func(c *fiber.Ctx) error {
+		log.Println(c.JSON(skills))
+		return c.JSON(skills)
 	})
 
 	app.Listen(":3000")
