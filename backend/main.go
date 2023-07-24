@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
+	_ "encoding/json"
 	"fmt"
-	"io/ioutil"
+	_ "io/ioutil"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -33,16 +33,16 @@ const (
 func main() {
 
 	// Read the JSON data from the file
-	data, err := ioutil.ReadFile("productData.json")
-	if err != nil {
-		log.Fatal("Error reading productData.json:", err)
-	}
+	// data, err := ioutil.ReadFile("productData.json")
+	// if err != nil {
+	// 	log.Fatal("Error reading productData.json:", err)
+	// }
 
-	// Unmarshal the JSON data into a slice of Course structs
-	var skills []Skill
-	if err := json.Unmarshal(data, &skills); err != nil {
-		log.Fatal("Error unmarshaling JSON:", err)
-	}
+	// Unmarshal the JSON data into a slice of Skill structs
+	// var skills []Skill
+	// if err := json.Unmarshal(data, &skills); err != nil {
+	// 	log.Fatal("Error unmarshaling JSON:", err)
+	// }
 
 	// Connect to the PostgreSQL database
 	connStr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
@@ -53,15 +53,15 @@ func main() {
 	defer db.Close()
 
 	// Insert each Skill into the database
-	for _, skill := range skills {
-		_, err := db.Exec("INSERT INTO skills (id, name, short_description, long_description, price, rating, download_time, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-			skill.ID, skill.Name, skill.ShortDesc, skill.LongDesc, skill.Price, skill.Rating, skill.DownloadTime, skill.Image)
-		if err != nil {
-			log.Println("Error inserting data:", err)
-		}
-	}
+	// for _, skill := range skills {
+	// 	_, err := db.Exec("INSERT INTO skills (id, name, short_description, long_description, price, rating, download_time, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+	// 		skill.ID, skill.Name, skill.ShortDesc, skill.LongDesc, skill.Price, skill.Rating, skill.DownloadTime, skill.Image)
+	// 	if err != nil {
+	// 		log.Println("Error inserting data:", err)
+	// 	}
+	// }
 
-	log.Println("Data inserted successfully!")
+	// log.Println("Data inserted successfully!")
 
 	app := fiber.New()
 
@@ -81,7 +81,27 @@ func main() {
 	})
 
 	app.Get("/api/products", func(c *fiber.Ctx) error {
-		return c.JSON(skills)
+		// Query the data from the database
+		rows, err := db.Query("SELECT id, name, short_description, long_description, price, rating, download_time, image FROM skills")
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString("Error fetching data from the database")
+		}
+		defer rows.Close()
+
+		// Create a slice to store the products fetched from the database
+		var dbSkills []Skill
+
+		// Iterate through the rows and populate the dbSkills slice
+		for rows.Next() {
+			var skill Skill
+			if err := rows.Scan(&skill.ID, &skill.Name, &skill.ShortDesc, &skill.LongDesc, &skill.Price, &skill.Rating, &skill.DownloadTime, &skill.Image); err != nil {
+				return c.Status(fiber.StatusInternalServerError).SendString("Error scanning data from the database")
+			}
+			dbSkills = append(dbSkills, skill)
+		}
+
+		// Return the products as a JSON response
+		return c.JSON(dbSkills)
 	})
 
 	app.Listen(":3000")
