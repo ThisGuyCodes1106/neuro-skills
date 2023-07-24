@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
-	_ "encoding/json"
+	// "encoding/json"
 	"fmt"
-	_ "io/ioutil"
+	// "io/ioutil"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -26,7 +26,7 @@ const (
 	host     = "localhost"
 	port     = 5432
 	user     = "postgres"
-	password = "BurnRome"
+	password = "rome"
 	dbname   = "postgres"
 )
 
