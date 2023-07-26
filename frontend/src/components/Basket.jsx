@@ -56,8 +56,8 @@ export default function Basket({basket}) {
               <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell colSpan={2}>Total</TableCell>
-              <TableCell align="right">£{ccyFormat(invoiceTotal)}</TableCell>
+              <TableCell colSpan={2} sx={{fontWeight: 'bold'}}>Total</TableCell>
+              <TableCell align="right" sx={{fontWeight: 'bold'}}>£{ccyFormat(invoiceTotal)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
