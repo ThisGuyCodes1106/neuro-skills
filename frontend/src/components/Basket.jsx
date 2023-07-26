@@ -1,10 +1,5 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@mui/material';
+
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -24,7 +19,8 @@ export default function Basket({basket}) {
     let invoiceTotal = subtotal + invoiceTaxes
 
     return (
-      <TableContainer component={Paper}>
+      <div>
+        <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="spanning table">
           <TableHead>
             <TableRow>
@@ -66,5 +62,8 @@ export default function Basket({basket}) {
           </TableBody>
         </Table>
       </TableContainer>
+      <br />
+      <Button variant="contained" color='success' sx={{marginLeft: 'auto', display: 'block'}}>Proceed to checkout</Button>
+      </div>
     );
   }

@@ -9,6 +9,7 @@ function BasketPage({basket}) {
   return (
     <div>
       <Nav />
+      <br />
       <Container>
         <Basket basket={basket} />
       </Container>
