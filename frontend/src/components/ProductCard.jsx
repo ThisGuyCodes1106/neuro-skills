@@ -6,10 +6,15 @@ import PropTypes from 'prop-types';
 function ProductCard(props) {
 
     ProductCard.propTypes = {
-        skill: PropTypes.arrayOf(PropTypes.object).isRequired
+        skill: PropTypes.arrayOf(PropTypes.object).isRequired,
+        onBuyButtonClick: PropTypes.func.isRequired
     }
 
     const { name, shortDescription, price, rating, downloadTime, image } = props.skill
+
+    const handleBuyClick = () => {
+        props.onBuyButtonClick(props.skill)
+    }
 
     return (
         <Grid item xs={12} sm={6} md={4} sx={{height: "100%"}}>
@@ -34,7 +39,7 @@ function ProductCard(props) {
                         paddingBottom: 1
                     }}>
                         <Typography variant='body2' paddingBottom={2}>£{price}</Typography>
-                        <Button variant="outlined" endIcon={<LocalAtmIcon />} sx={{
+                        <Button onClick={handleBuyClick} variant="outlined" endIcon={<LocalAtmIcon />} sx={{
                             position: 'absolute',
                             bottom: 8,
                             right: 8
