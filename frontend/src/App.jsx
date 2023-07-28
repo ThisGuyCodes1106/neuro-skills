@@ -2,6 +2,8 @@ import './App.css'
 import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx'
+import Nav from './components/Nav'
+import CheckoutPage from './pages/CheckoutPage.jsx'
 import BasketPage from './pages/BasketPage.jsx'
 
 export const ENDPOINT = 'http://localhost:3000';
@@ -28,6 +30,7 @@ function App() {
     getAllProducts();
   }, []);
 
+
   const addToBasket = (product) => {
 
     let basketItem = {...product, quantity: 1, total: product.price}
@@ -52,11 +55,14 @@ function App() {
     }
   }
 
+
   return (
     <div>
+      <Nav basket={basket} />
       <Routes>
         <Route path='/' element={<Home products={products} addToBasket={addToBasket} />} />
         <Route path='/basket' element={<BasketPage basket={basket} />} />
+        <Route path='/checkout' element={<CheckoutPage />} />
       </Routes>
     </div>
   )

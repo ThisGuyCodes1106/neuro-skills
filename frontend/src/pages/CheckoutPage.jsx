@@ -2,19 +2,20 @@ import '../App.css'
 import Nav from '../components/Nav.jsx'
 import Footer from '../components/Footer.jsx'
 import Basket from '../components/Basket.jsx'
+import Checkout from '../components/Checkout.jsx'
 import Container from '@mui/material/Container';
 
-function BasketPage({basket}) {
+function CheckoutPage() {
 
   return (
     <div>
       <br />
       <Container>
-        <Basket basket={basket} />
+        <Checkout />
       </Container>
       <Footer />
     </div>
   )
 }
 
-export default BasketPage
+export default CheckoutPage

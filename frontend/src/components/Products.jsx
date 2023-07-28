@@ -13,7 +13,8 @@ function Products({ productsData, addToBasket }) {
 
   return (
     <div>
-      <Grid container spacing={2}>
+      <h1 className="cyberpunk info-header">Our products</h1>
+      <Grid container spacing={4}>
         {productsData.map((product, index) => (
           <ProductCard
             skill={product}

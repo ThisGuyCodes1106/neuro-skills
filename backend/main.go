@@ -77,6 +77,7 @@ func main() {
 	})
 
 	app.Get("/", func(c *fiber.Ctx) error {
+
 		return c.SendString("Hello, World!")
 	})
 
@@ -102,6 +103,15 @@ func main() {
 
 		// Return the products as a JSON response
 		return c.JSON(dbSkills)
+	})
+
+	app.Post("/api/order", func(c *fiber.Ctx) error {
+
+		order := c.Body()
+
+		fmt.Println("Received order:", string(order))
+
+		return c.JSON(order)
 	})
 
 	app.Listen(":3000")

@@ -7,14 +7,10 @@ import InfoSection from '../components/InfoSection.jsx'
 
 import Container from '@mui/material/Container';
 
-export const ENDPOINT = 'http://localhost:3000';
-
-
 function Home({ products, addToBasket }) {
 
   return (
     <div>
-      <Nav />
       <Container>
         <InfoSection />
         <Products productsData={products} addToBasket={addToBasket} />

@@ -1,5 +1,5 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@mui/material';
-
+import { Link } from 'react-router-dom'
 
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
@@ -7,7 +7,7 @@ function ccyFormat(num) {
 
 export default function Basket({basket}) {
 
-    const TAX_RATE = 0.15;
+    const TAX_RATE = 0.70;
 
     let subtotal = 0
 
@@ -17,6 +17,19 @@ export default function Basket({basket}) {
 
     let invoiceTaxes = TAX_RATE * subtotal
     let invoiceTotal = subtotal + invoiceTaxes
+
+    function postOrder(order) {
+
+      fetch('http://localhost:3000/api/order', {
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify(order)
+      }
+    )}
+
+    const handleProceedToCheckout = () => {
+      postOrder(basket)
+    }
 
     return (
       <div>
@@ -63,7 +76,9 @@ export default function Basket({basket}) {
         </Table>
       </TableContainer>
       <br />
-      <Button variant="contained" color='success' sx={{marginLeft: 'auto', display: 'block'}}>Proceed to checkout</Button>
+      <Link to={'/checkout'} style={{textDecoration: 'none'}}>
+        <Button onClick={handleProceedToCheckout} variant="contained" color='success' sx={{marginLeft: 'auto', display: 'block'}}>Proceed to checkout</Button>
+      </Link>
       </div>
     );
   }

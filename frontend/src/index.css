@@ -1,13 +1,82 @@
 :root {
   font-family: 'Roboto';
+  --glitched-duration: 0.9s;
+  --glitched-long-duration: 3s;
+  --yellow-color: #f9f002;
+  --yellow-color-opacity: #f9f00242;
+  --orange-color: #ff9800;
+  --border-color: #8ae66e;
+  --red-color: #ff003c;
+  --blue-color: #0c5f74;
+  --green-color: #298d29;
+  --purple-color: purple;
+  --neon-color: #39ff14;
+  --black-color: #000;
+  --dark: #333;
+  --bg: transparent;
 }
 
 * {
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: valorax;
+  src: url(./assets/cyberpunk-fonts/valorax-89146/Valorax-lg25V.otf);
+}
+
+@font-face {
+  font-family: oxanium;
+  src: url(./assets/cyberpunk-fonts/Oxanium.woff2);
+}
+
+@font-face {
+  font-family: cyberriders;
+  src: url(./assets/cyberpunk-fonts/cyberway-riders-43849/CyberwayRiders-lg97d.ttf);
+}
+
 body {
   margin: 0;
+  background: url(../src/assets/images/bg-cyber3.jpg) no-repeat center center fixed;
+  /* -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover; */
+  background-size: cover;
+  background-position: center;
+}
+
+.navbar {
+  background: var(--black-color);
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo-section {
+  display: flex;
+  align-items: baseline;
+}
+
+.navbar h1 {
+  font-family: valorax;
+  font-size: 4rem;
+  margin: 0;
+  color: whitesmoke;
+}
+
+.tagline {
+  padding: 10px 20px;
+  font-family: oxanium;
+  font-size: 5rem;
+  color: var(--yellow-color);
+}
+
+.nav-logo {
+  width: 100px;
+}
+
+.info-header {
+  font-family: oxanium;
+  color: var(--yellow-color);
 }
 
 .footer {

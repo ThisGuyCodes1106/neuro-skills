@@ -15,16 +15,10 @@ function InfoSection() {
 
     return (
         <div>
-            <Typography variant="h1" marginY={2} sx={{
-                borderBottom: "2px solid lightgrey",
-                marginBottom: "2rem",
-                paddingBottom: "2rem",
-            }}>Upgrade Your Mind, Unleash Your Potential!</Typography>
+            <h1 className="tagline">Upgrade Your Mind, Unleash Your Potential!</h1>
 
-<Typography variant="h5" marginY={2} sx={{
-                borderBottom: '2px solid black',
-                display: 'inline-block'
-            }}>How it works:</Typography>
+
+            <h1 className="cyberpunk info-header">How it works</h1>
 
             <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary
